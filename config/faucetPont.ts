@@ -5,7 +5,7 @@ export const faucetPort = {
   "fuel": 6004,
   "aptos": 6005,
   "ethereum": 6005,
-  "polygon": 6006,
+  // "polygon": 6006,
   "avalanche": 6007,
   "near": 6008,
   "aurora": 6009,

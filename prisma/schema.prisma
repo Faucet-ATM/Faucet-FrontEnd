@@ -72,7 +72,7 @@ model CryptoCurrency {
   network         String
   balance         Float?
   currencyCode    String
-  claimAmount     Float
+  claimAmount     String
   // 领取频率（小时）
   claimFrequency  Int
   balanceAlert    Float

@@ -68,7 +68,12 @@ const FormFaucet: React.FC<FormFaucetProps> = ({
             type="submit"
             isLoading={isPending}
           >
-            Request {cryptoCurrency.claimAmount} {cryptoCurrency.currencyCode}
+            Request{" "}
+            {
+              // cryptoCurrency.claimAmount
+              0.001
+            }{" "}
+            {cryptoCurrency.currencyCode}
           </Button>
         </div>
       </form>

@@ -1,39 +1,41 @@
 "use server"
 
 import { FaucetPortKeys, faucetPort } from "@/config/faucetPont";
-import { findCryptoCurrency } from "@/data/crypto-currency";
-import axios from 'axios';
 
+import axios from 'axios';
+import { findCryptoCurrency } from "@/data/crypto-currency";
 
 export const requestToken = async (
   { name, network, address }: { name: string; network: string; address: string }
 ) => {
-  // todo catch error
-  const cryptoCurrency = await findCryptoCurrency({ name, network })
-  const lowerCaseName = name.toLowerCase() as FaucetPortKeys
-  const port = faucetPort[lowerCaseName]
-  const prefix = ['aptos',].includes(lowerCaseName) ? '/api' : '';
-  const apiPath = `${prefix}/${lowerCaseName}/request`;
-
-  // const fetchUrl = `http://127.0.0.1:${port}${apiPath}`
-  const fetchUrl = `http://150.158.30.101:${port}${apiPath}`; 
-  
   try {
+    const cryptoCurrency = await findCryptoCurrency({ name, network })
+    const lowerCaseName = name.toLowerCase() as FaucetPortKeys
+    const port = faucetPort[lowerCaseName]
+    const prefix = ['aptos',].includes(lowerCaseName) ? '/api' : '';
+    const apiPath = `${prefix}/${lowerCaseName}/request`;
+    // let fetchUrl = `${process.env.TOKEN_REQUEST_HOST}:${port}${apiPath}`;
+    let fetchUrl = `${process.env.TOKEN_REQUEST_HOST}${apiPath}`;
+
+    // 为了对接调试sepolia、Holesky，目前的不统一对接的地址，请求路径不统一
+    if (name === 'Sepolia' || name === 'Holesky') {
+      fetchUrl = `${process.env.TOKEN_REQUEST_HOST}/ether/request`;
+    }
+
     const response = await axios.post(fetchUrl, {
       address,
       network,
-      amount: cryptoCurrency?.claimAmount.toString(),
+      amount: cryptoCurrency?.claimAmount,
     }, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      // headers: {
+      //   'Content-Type': 'application/json'
+      // },
+      timeout: 30000 // 10秒超时
     });
-    return response.data
+    console.log(">response", response.data)
+    return response?.data
   } catch (error: any) {
-    return { success: false, message: error.message};
+    console.error('Error requesting token:', error);
+    return { success: false, message: error?.message };
   }
-
-
-
-
 }
