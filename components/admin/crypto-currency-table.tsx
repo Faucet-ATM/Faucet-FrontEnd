@@ -75,8 +75,8 @@ export default function App() {
   }, [pagination.current]);
 
   const handleOpenModal = (item: z.infer<typeof CryptoCurrencySchema>) => {
-    setError("")
-    setSuccess("")
+    setError("");
+    setSuccess("");
     setSelectedItem(item);
     onOpen();
   };
@@ -88,10 +88,9 @@ export default function App() {
   };
 
   const onSubmit = (values: z.infer<typeof CryptoCurrencySchema>) => {
-    console.log("🍷🍷", values, selectedItem);
-
     if (selectedItem && operatorType === OperatorEnum["DELETE"]) {
       startTransition(() => {
+        if (!selectedItem.id) return;
         deleteCryptoById((selectedItem as any)?.id)
           .then((res) => {
             if (res.error) {
@@ -108,6 +107,7 @@ export default function App() {
       });
     } else if (selectedItem && operatorType === OperatorEnum["EDIT"]) {
       startTransition(() => {
+        if (!selectedItem.id) return;
         updateCryptoCurrency(values, (selectedItem as any)?.id)
           .then((res) => {
             if (res.error) {
@@ -252,7 +252,7 @@ export default function App() {
                         }}
                       >
                         <DeleteIcon />
-                      </Button> 
+                      </Button>
                     </div>
                   </TableCell>
                 ) : (

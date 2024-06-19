@@ -36,7 +36,7 @@ const DefaultValus = {
   network: "",
   balance: 0,
   currencyCode: "",
-  claimAmount: 1,
+  claimAmount: "",
   claimFrequency: 1,
   balanceAlert: 1,
   donationAddress: ""
@@ -138,6 +138,10 @@ const CryptoCurrencyModal = ({
                       isClearable
                       labelPlacement="outside"
                       {...field}
+                      onClear={() => {
+                        field.onChange("");
+                        return undefined;
+                      }}
                     />
                   );
                 }}
@@ -156,6 +160,10 @@ const CryptoCurrencyModal = ({
                       isClearable
                       labelPlacement="outside"
                       {...field}
+                      onClear={() => {
+                        field.onChange("");
+                        return undefined;
+                      }}
                     />
                   );
                 }}
@@ -175,6 +183,10 @@ const CryptoCurrencyModal = ({
                       isClearable
                       labelPlacement="outside"
                       {...field}
+                      onClear={() => {
+                        field.onChange("");
+                        return undefined;
+                      }}
                     />
                   );
                 }}
@@ -193,6 +205,10 @@ const CryptoCurrencyModal = ({
                       isClearable
                       labelPlacement="outside"
                       {...field}
+                      onClear={() => {
+                        field.onChange("");
+                        return undefined;
+                      }}
                     />
                   );
                 }}
@@ -244,6 +260,10 @@ const CryptoCurrencyModal = ({
                       isClearable
                       labelPlacement="outside"
                       {...field}
+                      onClear={() => {
+                        field.onChange("");
+                        return undefined;
+                      }}
                     />
                   );
                 }}
@@ -254,7 +274,7 @@ const CryptoCurrencyModal = ({
                 render={({ field, fieldState }) => {
                   return (
                     <Input
-                      type="number"
+                      type="string"
                       label="Claim Amount"
                       placeholder="please enter your claim amount"
                       errorMessage={fieldState.error?.message}
@@ -262,16 +282,10 @@ const CryptoCurrencyModal = ({
                       isInvalid={fieldState.invalid}
                       labelPlacement="outside"
                       {...field}
-                      value={
-                        field.value !== undefined ? String(field.value) : ""
-                      }
-                      onChange={(e) =>
-                        field.onChange(
-                          e.target.value !== ""
-                            ? parseFloat(e.target.value)
-                            : ""
-                        )
-                      }
+                      onClear={() => {
+                        field.onChange("");
+                        return undefined;
+                      }}
                     />
                   );
                 }}

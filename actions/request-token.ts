@@ -1,9 +1,9 @@
 "use server"
 
 import { FaucetPortKeys, faucetPort } from "@/config/faucetPont";
-import { findCryptoCurrency } from "@/data/crypto-currency";
-import axios from 'axios';
 
+import axios from 'axios';
+import { findCryptoCurrency } from "@/data/crypto-currency";
 
 export const requestToken = async (
   { name, network, address }: { name: string; network: string; address: string }
@@ -16,8 +16,8 @@ export const requestToken = async (
   const apiPath = `${prefix}/${lowerCaseName}/request`;
 
   // const fetchUrl = `http://127.0.0.1:${port}${apiPath}`
-  const fetchUrl = `http://150.158.30.101:${port}${apiPath}`; 
-  
+  const fetchUrl = `http://150.158.30.101:${port}${apiPath}`;
+
   try {
     const response = await axios.post(fetchUrl, {
       address,
